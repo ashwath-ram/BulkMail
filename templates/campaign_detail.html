@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Campaign Logs</title>
+    <style>
+        body { font-family: Arial; max-width: 1000px; margin: 40px auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f5f5f5; }
+        .sent { color: green; }
+        .failed { color: red; }
+        .pending { color: orange; }
+    </style>
+</head>
+<body>
+
+<h2>{{ campaign.campaign_name }} - Delivery Logs</h2>
+
+<p>
+Total: {{ campaign.total_recipients }} |
+Sent: {{ campaign.sent_count }} |
+Failed: {{ campaign.failed_count }}
+</p>
+
+<table>
+    <tr>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Sent At</th>
+        <th>Error</th>
+    </tr>
+    {% for log in logs %}
+    <tr>
+        <td>{{ log.recipient_email }}</td>
+        <td class="{{ log.status }}">{{ log.get_status_display }}</td>
+        <td>{{ log.sent_at }}</td>
+        <td>{{ log.error_message }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>

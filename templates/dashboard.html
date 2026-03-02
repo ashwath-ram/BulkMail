@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body { font-family: Arial; max-width: 1000px; margin: 40px auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f5f5f5; }
+        .status { font-weight: bold; }
+        a { text-decoration: none; color: blue; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h2>Campaign Dashboard</h2>
+    <a href="{% url 'create_campaign' %}" class="btn">+ Create Campaign</a><br/>
+    <a href="{% url 'campaign_list' %}" class="btn">+ Campaign List</a>
+</div>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Total Recipients</th>
+        <th>Sent</th>
+        <th>Failed</th>
+        <th>Status Summary</th>
+        <th>Status</th>
+        <th>Details</th>
+    </tr>
+
+    {% for campaign in campaigns %}
+    <tr>
+        <td>{{ campaign.campaign_name }}</td>
+        <td>{{ campaign.total_recipients }}</td>
+        <td>{{ campaign.sent_count }}</td>
+        <td>{{ campaign.failed_count }}</td>
+        <td>
+            {{ campaign.sent_count }}/{{ campaign.total_recipients }} sent
+        </td>
+        <td class="status">{{ campaign.get_status_display }}</td>
+        <td>
+            <a href="{% url 'campaign_detail' campaign.id %}">View Logs</a>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
