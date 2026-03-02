@@ -52,13 +52,6 @@ def send_email_batch(campaign_id, email_batch):
             log = EmailLog.objects.get(campaign=campaign,status='pending',recipient_email=email)
 
             try:
-                send_mail(
-                    subject=campaign.subject_line,
-                    message=campaign.email_content,
-                    from_email="no-reply@example.com",
-                    recipient_list=[email],
-                    fail_silently=False,
-                )
                 msg = EmailMultiAlternatives(
                     subject=campaign.subject_line,
                     body="This email requires HTML support.",
